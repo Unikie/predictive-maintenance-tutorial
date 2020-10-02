@@ -11,7 +11,7 @@ Failure was followed always when all these conditions were true:
 
 `vibration_x` had no effect, it was totally random in relation to failures.
 
-Each gadget was individual unit, so measurements of the other gadgets had no impact.
+Each gadget was an individual unit, so measurements of the other gadgets had no impact.
 
 ## The solution script
 Due to wicked mix of randomness and meaningless patterns in the created data, the modeling revealed to be surprisingly challenging. On the other hand, that is everyday stuff in real life.
@@ -22,10 +22,10 @@ Here is the `solution/run.py` script in a nutshell:
 3. If the next failure happens in less than 1 hour, tag the row as a failure
 4. Calculate features
     * For example mean of the sensor from the past 2 hours
-    * I created directly the features I knew were correct
+    * I created directly the features I knew should bring the best results
 5. Split the data
-    * Gadgets 1 and 2 for training
-    * Gadget 3 for testing
+    * Gadgets 1-4 for training
+    * Gadgets 5-6 for testing
 6. Train a few different machine learning models
 7. Determine which model gave the best metrics against the test data:
     * `Precision`: What percentage of the failure predictions were correct

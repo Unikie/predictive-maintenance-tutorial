@@ -1,9 +1,11 @@
 ### IMPORT LIBRARIES
 ##### Built in libraries
 import os
+
 ###### Use pip or anaconda to install
 import numpy as np
 import pandas as pd
+import matplotlib.pyplot as plt
 
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import KBinsDiscretizer, MinMaxScaler, normalize
@@ -135,7 +137,10 @@ bayes = GaussianNB()
 bayes.fit(df_train[X], df_train[y])
 df_test['bayes'] = bayes.predict(df_test[X])
 
+
+
 ### PRINT RESULTS
+model_summary = []
 models = ['random_forest', 'log_regr', 'lin_regr', 'knn', 'nn', 'svm', 'bayes']
 for m in models:
     print(f"\n-----------\n{m}")
@@ -146,7 +151,36 @@ for m in models:
         print(f"Precision: {precision}")
         print(f"Recall: {recall}")
         print(df_test[m].value_counts())
+
+        model_summary.append({
+            'model': m,
+            'precision': precision,
+            'recall': recall
+        })
+
     except:
         print("Can't calculate score")
 
-print(df_test[['gadget_id', 'measurement_time'] + cols + models].head(5))
+#PRINT RESULT DATAFRAME
+#print(df_test[['gadget_id', 'measurement_time'] + cols + models].head(5))
+
+#CREATE IMAGE FOR MODEL COMPARISON
+df_summary = pd.DataFrame(model_summary)
+
+x = np.arange(len(df_summary['model']))
+width = 0.35
+
+fig, ax = plt.subplots()
+rects1 = ax.bar(x - width/2, df_summary['precision'], width, label='Precision')
+rects2 = ax.bar(x + width/2, df_summary['recall'], width, label='Recall')
+
+# Add some text for labels, title and custom x-axis tick labels, etc.
+ax.set_ylabel('Result')
+ax.set_title('Precision and Recall by machine learning model')
+ax.set_xticks(x)
+ax.set_xticklabels(df_summary['model'])
+ax.legend()
+
+fig.tight_layout()
+
+plt.savefig('img/results.png')

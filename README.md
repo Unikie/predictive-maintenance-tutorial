@@ -8,6 +8,7 @@
     * numpy `1.19.0`
     * pandas `1.0.5`
     * scikit-learn `0.23.1`
+    * matplotlib `3.1.3`
 
 ## The assignment
 Gadget company Ltd is creating a predictive algorithm to detect their gadget breakdowns.
